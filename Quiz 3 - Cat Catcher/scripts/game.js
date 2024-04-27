@@ -23,6 +23,7 @@ let game = new Phaser.Game(config);
 // Variables
 let player, goal, cursors, textScore, score, isEnding = false;
 
+// Preload Assets
 function preload() {
     console.log("Preloading assets...");
     this.load.image("background", "./assets/images/background.png");
@@ -36,6 +37,7 @@ function create() {
     console.log("Creating game...");
     this.add.image(0, 0, "background").setOrigin(0,0);
 
+    // Background music
     const music = this.sound.add('theme');
     music.play();
 
@@ -43,6 +45,7 @@ function create() {
     player.setCollideWorldBounds(true);
 
     goal = this.physics.add.sprite(850, 550, "gift");
+    goal.setSize(50, 50);
 
     score = 0;
     textScore = this.add.text(50, 50, "Score: " + score.toString(), {
@@ -56,6 +59,7 @@ function create() {
 
 function update() {
     if (!isEnding) {
+        // Player movement
         if (cursors.left.isDown) {
             player.x -= 5; 
             player.flipX = true; 
@@ -69,7 +73,8 @@ function update() {
             player.setVelocityY(-330); 
         }
     }
-    
+
+    // Winning condition
     this.physics.add.overlap(player, goal, winGame);
 }
 
